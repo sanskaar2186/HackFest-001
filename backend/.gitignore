@@ -1,0 +1,6 @@
+.env
+backend\.env
+hackfest
+backend\hackfest
+node_modules
+*.sublime-workspace

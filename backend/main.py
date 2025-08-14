@@ -26,9 +26,11 @@ app.add_middleware(
 # Import routers
 from routers.auth import router as auth_router
 from routers.regions import reg_router as regions_router
+from routers.data import data_router
 
 app.include_router(auth_router, prefix="/auth")
 app.include_router(regions_router)
+app.include_router(data_router)
 
 @app.get("/")
 async def root():

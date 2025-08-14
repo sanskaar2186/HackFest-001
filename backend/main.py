@@ -10,7 +10,9 @@ from db.database import supabase
 app = FastAPI(
     title="HackFest API",
     description="API for HackFest platform",
-    version="0.1.0"
+    version="0.1.0",
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
 app.add_middleware(
@@ -23,8 +25,15 @@ app.add_middleware(
 
 # Import routers
 from routers.auth import router as auth_router
+from routers.regions import reg_router as regions_router
 
 app.include_router(auth_router, prefix="/auth")
+app.include_router(regions_router)
+
+@app.get("/")
+async def root():
+    return {"message": "welcome to the Climate vista"}
+
 
 if __name__ == "__main__":
     import uvicorn

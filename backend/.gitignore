@@ -4,3 +4,6 @@ hackfest
 backend\hackfest
 node_modules
 *.sublime-workspace
+__pycache__
+*.pyc
+backend\__pycache__

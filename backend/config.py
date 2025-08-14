@@ -20,5 +20,6 @@ class Settings:
     # Handle ALLOWED_ORIGINS properly
     _allowed_origins = os.getenv("ALLOWED_ORIGINS", "")
     ALLOWED_ORIGINS: list = _allowed_origins.split(",") if _allowed_origins else ["*"]
+    OPENAQ_KEY: str = os.getenv("OPENAQ_KEY")
 
 settings = Settings()

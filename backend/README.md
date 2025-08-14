@@ -1,61 +1,82 @@
-# Backend Server
+# HackFest Backend - Fixed Authentication System
 
-Python FastAPI backend server.
+## What's Fixed
 
-## Prerequisites
+✅ **Import errors** - Fixed relative import issues  
+✅ **Missing schemas** - Created auth.py schemas  
+✅ **Database connection** - Fixed get_db function  
+✅ **Router imports** - Fixed import paths in main.py  
 
-- Python 3.8 or higher
-- pip (Python package installer)
-- virtualenv or venv
+## Quick Setup
 
-## Setup
-
-1. Create and activate virtual environment:
-```bash
-python -m venv hackfest
-source hackfest/bin/activate  # On Windows: hackfest\Scripts\activate
+### 1. Environment Variables
+Create `.env` file:
+```env
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_KEY=your_anon_key_here
+SECRET_KEY=your_secret_key_here
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+HOST=0.0.0.0
+PORT=8000
+DEBUG=True
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 ```
 
-2. Install dependencies:
+### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Set up environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your configuration
-```
-
-4. Run the development server:
+### 3. Run the Server
 ```bash
 python main.py
 ```
 
-## Project Structure
+## API Endpoints
+
+- `POST /register` - User registration
+- `POST /login` - User login  
+- `GET /test-db` - Test database connection
+
+## Test the System
+
+1. **Test Database**: `http://localhost:8000/test-db`
+2. **Register User**: `POST /register` with email, username, password
+3. **Login User**: `POST /login` with email, password
+
+## Folder Structure
 
 ```
 backend/
-├── core/           # Core functionality and configurations
-├── data/           # Data files
-├── db/             # Database models and connections
-├── ml_models/      # Machine learning models
-├── models/         # Data models/schemas
-├── routers/        # API routes
-├── schemas/        # Pydantic schemas
-├── services/       # Business logic
-├── tests/          # Unit tests
-└── main.py        # Application entry point
+├── models/          # User models
+│   └── user.py     
+├── schemas/         # Request/response schemas
+│   └── auth.py     
+├── routers/         # API endpoints
+│   └── auth.py     
+├── db/             # Database connection
+│   └── database.py 
+├── config.py       # Settings
+└── main.py         # FastAPI app
 ```
 
-## API Documentation
+## Example Requests
 
-When the server is running, access:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-## Running Tests
-
-```bash
-pytest
+### Register
+```json
+{
+  "email": "user@example.com",
+  "username": "testuser",
+  "password": "SecurePass123"
+}
 ```
+
+### Login
+```json
+{
+  "email": "user@example.com",
+  "password": "SecurePass123"
+}
+```
+
+Your authentication system should now work without errors!

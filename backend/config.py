@@ -7,6 +7,7 @@ class Settings:
     # Supabase
     SUPABASE_URL: str = os.getenv("SUPABASE_URL")
     SUPABASE_KEY: str = os.getenv("SUPABASE_KEY")
+    SUPABASE_SERVICE_ROLE_KEY=os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
     # JWT
     SECRET_KEY: str = os.getenv("SECRET_KEY")
@@ -20,5 +21,6 @@ class Settings:
     # Handle ALLOWED_ORIGINS properly
     _allowed_origins = os.getenv("ALLOWED_ORIGINS", "")
     ALLOWED_ORIGINS: list = _allowed_origins.split(",") if _allowed_origins else ["*"]
+    OPENAQ_KEY: str = os.getenv("OPENAQ_KEY")
 
 settings = Settings()

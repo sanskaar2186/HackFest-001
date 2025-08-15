@@ -29,6 +29,8 @@ from routers.regions import reg_router as regions_router
 from routers.data import data_router
 from routers.analytics import analytics_router
 from routers.current import current_router
+from routers.ml_train_climate import router as ml_train_router
+from routers.forecast import router as forecast_router
 
 
 
@@ -37,7 +39,8 @@ app.include_router(regions_router)
 app.include_router(data_router)
 app.include_router(analytics_router)
 app.include_router(current_router)
-
+app.include_router(ml_train_router)
+app.include_router(forecast_router)
 
 
 @app.get("/")

@@ -3,7 +3,8 @@ from db.database import supabase
 from schemas.climate import HistoricalClimateResponse, HistoricalClimateData
 from utils.nasa_api import fetch_historical_climate
 from schemas.climate import CurrentWeatherResponse, CurrentWeather, DailyForecast
-from utils.openweather import fetch_current_weather
+from utils.openweather_current import fetch_current_weather
+
 from schemas.airquality import AirQualityResponse, AirQuality
 from utils.openweather_airquality import fetch_air_quality
 
@@ -44,36 +45,33 @@ def get_historical_climate(
 
 
 
-@data_router.get("/current", response_model=CurrentWeatherResponse)
-def get_current_weather(region_id: int = Query(..., description="ID of the region")):
-    """
-    Fetch current weather for a region.
-    7-day forecast placeholder will be empty due to Free plan limitations.
-    """
-    # Get region coordinates from Supabase
-    try:
-        region_resp = supabase.table("regions").select("*").eq("id", region_id).execute()
-        if not region_resp.data:
-            raise HTTPException(status_code=404, detail=f"Region {region_id} not found")
-        region = region_resp.data[0]
-        lat = region["latitude"]
-        lon = region["longitude"]
-        name = region["name"]
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching region: {str(e)}")
-
-    # Fetch current weather
-    try:
-        current, daily = fetch_current_weather(lat, lon)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching weather: {str(e)}")
-
-    return CurrentWeatherResponse(
-        region_id=region_id,
-        region_name=name,
-        current=CurrentWeather(**current),
-        daily=[DailyForecast(**d) for d in daily]  # empty list for now
-    )
+#@data_router.get("/current", response_model=CurrentWeatherResponse)
+#def get_current_weather(region_id: int = Query(..., description="ID of the region")):
+#    """
+ #   Fetch current weather for a region.
+  #  7-day forecast placeholder will be empty due to Free plan limitations.
+  #  """
+  #  # Get region coordinates from Supabase
+  #  try:
+  ##      if not region_resp.data:
+    #        raise HTTPException(status_code=404, detail=f"Region {region_id} not found")
+    #    region = region_resp.data[0]
+    #    lat = region["latitude"]
+    ##    name = region["name"]
+   ##    raise HTTPException(status_code=500, detail=f"Error fetching region: {str(e)}")
+#
+ #   # Fetch current weather
+  #  try:
+   #     current, daily = fetch_current_weather(lat, lon)
+   # except Exception as e:
+    #    raise HTTPException(status_code=500, detail=f"Error fetching weather: {str(e)}")
+#
+ #   return CurrentWeatherResponse(
+  #      region_id=region_id,
+   #     region_name=name,
+    #    current=CurrentWeather(**current),
+     #   daily=[DailyForecast(**d) for d in daily]  # empty list for now
+#    )
 
 
 
